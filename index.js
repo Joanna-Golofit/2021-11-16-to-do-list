@@ -4,19 +4,21 @@ const button = dqs("#button");
 const ul = dqs("ul");
 const input = dqs("#task-title");
 
+// checkInputValue();
+
 const addItem = (e) => {
   e.preventDefault();
   const text = input.value;
   if (!text || text === " ") {
     alert("wpisz cos");
+    button.disabled = true;
     return;
   };
-  
   const html = `<li>${text} 
                   <button class="btn btn-sm btn-warning">x</button>
                 </li>`;
   ul.insertAdjacentHTML("beforeend", html);
-  
+
   input.value = "";
 };
 
@@ -28,14 +30,19 @@ const crossOutItem = (e) => {
   console.log(e.target.nodeName);
   if (e.target.nodeName !== "LI") return;
   e.target.classList.toggle("done");
-}
+};
+const checkInputValue = () => {
+  if (input.value) {
+    button.disabled = false;
+  } else {
+    button.disabled = true;
+  }
+};
 
 button.addEventListener("click", addItem);
 ul.addEventListener("click", removeItem);
 ul.addEventListener("click", crossOutItem);
-
-
-
+input.addEventListener("keyup",checkInputValue)
 
 //========================pierwsza wersja = dzialajaca
 // const dqs = (selector) => document.querySelector(selector);
